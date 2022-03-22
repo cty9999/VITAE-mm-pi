@@ -663,7 +663,8 @@ class VariationalAutoEncoder(tf.keras.Model):
             reconstruction_zero_loss = self._get_reconstruction_loss(x, zero_in, scale_factor, 1)
             reconstruction_z_loss = (1-alpha)*reconstruction_z_loss + alpha*reconstruction_zero_loss
         
-        self.add_loss(reconstruction_z_loss + mmd_loss)
+        self.add_loss(reconstruction_z_loss)
+        self.add_loss(mmd_loss)
 
         if not pre_train:
             pi = self.pilayer(pi_cov) if self.pilayer is not None else None
@@ -724,6 +725,11 @@ class VariationalAutoEncoder(tf.keras.Model):
                   computation_method="general"):
 
         real_labels = K.reshape(K.cast(real_labels, 'int32'), (-1,))
+      
+        unique_set = list(set(real_labels))
+        reindex_dict = dict(zip(unique_set, range(n_conditions)))
+        real_labels = [reindex_dict[x] for x in real_labels]
+        
         conditions_mmd = tf.dynamic_partition(y_pred, real_labels, num_partitions=n_conditions)
         loss = 0.0
         if computation_method.isdigit():
