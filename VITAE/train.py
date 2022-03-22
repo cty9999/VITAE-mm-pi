@@ -196,7 +196,7 @@ def train(train_dataset, test_dataset, vae,
     early_stopping = Early_Stopping(patience = es_patience, tolerance = es_tolerance, relative=es_relative, warmup=es_warmup)
 
     print('Warmup:%d'%es_warmup)
-    weight = np.array([1,beta,beta], dtype=tf.keras.backend.floatx())
+    weight = np.array([1,1,beta,beta], dtype=tf.keras.backend.floatx())
     weight = tf.convert_to_tensor(weight)
     
     if not verbose:
