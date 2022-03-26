@@ -260,7 +260,7 @@ def train(train_dataset, test_dataset, vae,
             break
         
         if verbose:
-            print(' Training loss over epoch: %.4f (%.4f, %.4f, %.4f) Testing loss over epoch: %.4f (%.4f, %.4f, %.4f)' % (
+            print(' Training loss over epoch: %.4f (%.4f, %.4f, %.4f) Testing loss over epoch: %.4f (%.4f, %.4f, %.4f, %.4f)' % (
                 float(loss_train[4].result()),
                 float(loss_train[0].result()),
                 float(loss_train[1].result()),
